@@ -1,13 +1,12 @@
-import React, { useState } from 'react'
+import React, { useState, useContext } from 'react'
+import { BLACK_TEAM, ELEPHANT } from '../constants';
+import { chessContext } from '../context/ChessContextProvider';
 
-function Player() {
-    const [position, setPosition] = useState();
-    const [team, setTeam] = useState(BLACK_TEAM);
-    const [type, setType] = useState(BLACK_TEAM);
+function Player({ iposition, iteam = BLACK_TEAM, itype = ELEPHANT }) {
 
 
     return (
-        <div>Player</div>
+        <p>{itype.name.substring(0, 3)}</p>
     )
 }
 

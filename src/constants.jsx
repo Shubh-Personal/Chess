@@ -2,42 +2,48 @@ export const BLACK_TEAM = 'BLACK'
 export const WHITE_TEAM = 'WHITE'
 
 // valid positions
-const hourseValidPositions = (x, y) => [
-    x <= 6 ? (x + 1, y) : null,
-    x > 0 ? (x - 1, y) : null,
-    y <= 6 ? (x, y + 1) : null,
-    y > 0 ? (x, y - 1) : null]
+const hourseValidPositions = (x, y) =>
+    [
+        x < 6 && y > 0 ? (`${x + 2}, ${y - 1}`) : null,
+        x > 1 && y > 0 ? (`${x - 2}, ${y - 1}`) : null,
+        y > 1 && x < 7 ? (`${x + 1}, ${y - 2}`) : null,
+        y > 1 && x > 0 ? (`${x - 1}, ${y - 2}`) : null,
+        x < 6 && y < 7 ? (`${x + 2}, ${y + 1}`) : null,
+        x > 1 && y < 7 ? (`${x - 2}, ${y + 1}`) : null,
+        y < 6 && x < 6 ? (`${x + 1}, ${y + 2}`) : null,
+        y < 6 && x < 6 ? (`${x + 1}, ${y - 2}`) : null
+    ]
 
 const camelValidPositions = (x, y) => {
     let validPositions = []
     const tx = x;
     const ty = y;
-    while (x > 0 || y > 0) {
-        validPositions.push((x - 1, y - 1));
+    while (x > 0 && y > 0) {
+        validPositions.push((`${x - 1}, ${y - 1}`));
         x--;
         y--;
     }
     x = tx;
     y = ty;
 
-    while (x < 7 || y < 7) {
-        validPositions.push((x + 1, y + 1));
+    while (x < 7 && y < 7) {
+        validPositions.push((`${x + 1}, ${y + 1}`));
         x++
         y++
     }
     x = tx;
     y = ty;
 
-    while (x < 7 || y > 0) {
-        validPositions.push((x + 1, y - 1));
+    while (x < 7 && y > 0) {
+        validPositions.push((`${x + 1}, ${y - 1}`));
         x++
         y--
     }
     x = tx;
     y = ty;
 
-    while (x > 0 || y < 7) {
-        validPositions.push((x - 1, y + 1));
+    while (x > 0 && y < 7) {
+        validPositions.push((`${x - 1}, ${y + 1}`));
         x--
         y++
     }
@@ -45,8 +51,10 @@ const camelValidPositions = (x, y) => {
 }
 
 const soldierValidPositions = (x, y, team) => [
-    (x < 7 & team === BLACK_TEAM) ? (x + 1, y) : null,
-    (x > 0 & team === WHITE_TEAM) ? (x - 1, y) : null
+    (x < 7 & team === BLACK_TEAM) ? (`${x + 1}, ${y}`) : null,
+    (x === 1 & team === BLACK_TEAM) ? (`${x + 2}, ${y}`) : null,
+    (x > 0 & team === WHITE_TEAM) ? (`${x - 1}, ${y}`) : null,
+    (x === 6 & team === WHITE_TEAM) ? (`${x - 2}, ${y}`) : null
 ]
 
 const elephantValidPositions = (x, y) => {
@@ -55,28 +63,28 @@ const elephantValidPositions = (x, y) => {
     const ty = y;
 
     while (x > 0) {
-        validPositions.push((x - 1, y));
+        validPositions.push((`${x - 1}, ${y}`));
         x--
     }
     x = tx
     y = ty
 
     while (x < 7) {
-        validPositions.push((x + 1, y));
+        validPositions.push((`${x + 1}, ${y}`));
         x++
     }
     x = tx
     y = ty
 
     while (y > 0) {
-        validPositions.push((x, y - 1));
+        validPositions.push((`${x}, ${y - 1}`));
         y--
     }
     x = tx
     y = ty
 
     while (y < 7) {
-        validPositions.push((x, y + 1));
+        validPositions.push((`${x}, ${y + 1}`));
         y++
     }
     x = tx
@@ -91,58 +99,58 @@ const queenValidPositions = (x, y) => {
     const ty = y;
 
     while (x > 0) {
-        validPositions.push((x - 1, y));
+        validPositions.push((`${x - 1}, ${y}`));
         x--
     }
     x = tx
     y = ty
 
     while (x < 7) {
-        validPositions.push((x + 1, y));
+        validPositions.push((`${x + 1}, ${y}`));
         x++
     }
     x = tx
     y = ty
 
     while (y > 0) {
-        validPositions.push((x, y - 1));
+        validPositions.push((`${x}, ${y - 1}`));
         y--
     }
     x = tx
     y = ty
 
     while (y < 7) {
-        validPositions.push((x, y + 1));
+        validPositions.push((`${x}, ${y + 1}`));
         y++
     }
     x = tx
     y = ty
-    while (x > 0 || y > 0) {
-        validPositions.push((x - 1, y - 1));
+    while (x > 0 && y > 0) {
+        validPositions.push((`${x - 1}, ${y - 1}`));
         x--;
         y--;
     }
     x = tx;
     y = ty;
 
-    while (x < 7 || y < 7) {
-        validPositions.push((x + 1, y + 1));
+    while (x < 7 && y < 7) {
+        validPositions.push((`${x + 1}, ${y + 1}`));
         x++
         y++
     }
     x = tx;
     y = ty;
 
-    while (x < 7 || y > 0) {
-        validPositions.push((x + 1, y - 1));
+    while (x < 7 && y > 0) {
+        validPositions.push((`${x + 1}, ${y - 1}`));
         x++
         y--
     }
     x = tx;
     y = ty;
 
-    while (x > 0 || y < 7) {
-        validPositions.push((x - 1, y + 1));
+    while (x > 0 && y < 7) {
+        validPositions.push((`${x - 1}, ${y + 1}`));
         x--
         y++
     }
@@ -150,14 +158,14 @@ const queenValidPositions = (x, y) => {
 }
 
 const kingValidPositions = (x, y) => [
-    x > 0 ? (x - 1, y) : null,
-    x > 0 && y > 0 ? (x - 1, y - 1) : null,
-    y > 0 ? (x, y - 1) : null,
-    x < 7 ? (x + 1, y) : null,
-    y < 7 ? (x, y + 1) : null,
-    y < 7 && x < 7 ? (x + 1, y + 1) : null,
-    x < 7 && y > 0 ? (x + 1, y - 1) : null,
-    y < 7 && x > 0 ? (x - 1, y + 1) : null,
+    x > 0 ? (`${x - 1}, ${y}`) : null,
+    x > 0 && y > 0 ? (`${x - 1}, ${y - 1}`) : null,
+    y > 0 ? (`${x}, ${y - 1}`) : null,
+    x < 7 ? (`${x + 1}, ${y}`) : null,
+    y < 7 ? (`${x}, ${y + 1}`) : null,
+    y < 7 && x < 7 ? (`${x + 1}, ${y + 1}`) : null,
+    x < 7 && y > 0 ? (`${x + 1}, ${y - 1}`) : null,
+    y < 7 && x > 0 ? (`${x - 1}, ${y + 1}`) : null,
 ]
 
 //PLAYERS
