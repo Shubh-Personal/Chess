@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from 'react'
+import React, { useContext, useEffect, useMemo, useState } from 'react'
 import { BLACK_TEAM, HOURSE } from '../constants';
 import { chessContext } from '../context/ChessContextProvider';
 import Player from './Player';
@@ -8,6 +8,9 @@ function ChessBlock({ color, blockNo }) {
     const { players, activePlayer, possiblePositions, setPossiblePositions, setActivePlayer } = useContext(chessContext);
     const [filteredPlayer, setfilteredPlayer] = useState(null)
     const [isPosiblePosition, setIsPosiblePosition] = useState(false)
+    const x = Number(String(blockNo).split(',')[0])
+    const y = Number(String(blockNo).split(',')[1])
+    let positions = useMemo(() => { if (filteredPlayer) return filteredPlayer.type.posiblePositions(x, y, filteredPlayer.team) }, [filteredPlayer, x, y])
 
     useEffect(() => {
         let player = players.filter(player => {
@@ -32,17 +35,25 @@ function ChessBlock({ color, blockNo }) {
             && filteredPlayer.team === activePlayer.team
             && filteredPlayer.position === activePlayer.position
         ) {
+            //same player clicked
             setPossiblePositions([]);
             setActivePlayer(null);
         }
         else {
-            let x = Number(filteredPlayer.position.split(',')[0])
-            let y = Number(filteredPlayer.position.split(',')[1])
-            let poss = filteredPlayer.type.posiblePositions(x, y, filteredPlayer.team);
-            setPossiblePositions(poss);
-            setActivePlayer(filteredPlayer);
+
+            setPossiblePositions(positions);
+            setActivePlayer(filteredPlayer)
         }
 
+    }
+    const moveActivePlayer = () => {
+        if (activePlayer.position !== filteredPlayer.position && activePlayer.team !== filteredPlayer.team) {
+            const a = players.filter((player) => player.team === filteredPlayer.team && player.type === filteredPlayer.type)
+            console.log(a);
+        }
+    }
+
+    const newPosition = () => {
     }
     return (
         <>
@@ -70,7 +81,9 @@ function ChessBlock({ color, blockNo }) {
                             `linear-gradient(${color} 60%, green )`,
                         padding: '0.02rem',
                     }
-            }>
+            }
+                onClick={newPosition}
+            >
                 {/* <h2 style={filteredPlayer?.team === BLACK_TEAM ? { background: `blue` } : { background: 'aqua' }}> */}
                 {filteredPlayer &&
                     (<h3 style={

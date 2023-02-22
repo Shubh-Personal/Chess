@@ -213,6 +213,7 @@ export const chessContext = createContext();
 // }
 
 function ChessContextProvider({ children }) {
+ 
     const [players, setPlayers] = useState([
         //black team
         {
